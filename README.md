@@ -1,12 +1,12 @@
 
 
 ````markdown
-# 🎮 FiveM-Style Minigame for MTA:SA
+# FiveM-Style Minigame for MTA:SA
 
 This resource is designed for **Multi Theft Auto (MTA:SA)** and brings a modern **FiveM-style minigame system** into the game.  
 It replaces the classic circle-based games with a more dynamic, flexible, and fun system.  
 
-## ✨ Features
+## Features
 - Works on both **Client** and **Server** side.  
 - Easy-to-use `startMiniGame` function.  
 - Supports event-based logic with three return parameters:  
@@ -18,18 +18,7 @@ It replaces the classic circle-based games with a more dynamic, flexible, and fu
 
 ---
 
-## ⚡ Installation
-1. Download or clone this repository into your **MTA resources folder**.  
-2. Add the resource to your `mtaserver.conf`:  
-   ```xml
-   <resource src="fivem_minigame" startup="1" protected="0" />
-````
-
-3. Start the server and you’re ready to go.
-
----
-
-## 🛠️ Usage
+## Usage
 
 ### Server-Side Example
 
@@ -92,7 +81,7 @@ end)
 
 ---
 
-## 🎮 Example Scenarios
+## Example Scenarios
 
 * Start the minigame when a player enters a marker.
 * Trigger the game inside a **colshape** area.
@@ -104,7 +93,5 @@ end)
 
 Video Preview: [Click Here](https://streamable.com/iniy8q)
 
-
-```
 
 
