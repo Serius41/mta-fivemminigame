@@ -22,7 +22,6 @@ It replaces the classic circle-based games with a more dynamic, flexible, and fu
 
 ### Server-Side Example
 
-```lua
 loadstring(exports.fivem_minigame:loadMiniGameFunctions())()
 
 addCommandHandler("minigameserver", function(player)
@@ -47,13 +46,11 @@ addEventHandler("fishing:game.server", root, function(state, player, msg)
         end
     end
 end)
-```
 
 ---
 
 ### Client-Side Example
 
-```lua
 loadstring(exports.fivem_minigame:loadMiniGameFunctions())()
 
 addCommandHandler("minigameclient", function()
@@ -77,7 +74,6 @@ addEventHandler("fishing:game.client", root, function(state, player, msg)
         end
     end
 end)
-```
 
 ---
 
