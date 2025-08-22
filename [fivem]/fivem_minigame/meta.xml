@@ -1,0 +1,25 @@
+<meta>
+  <script src="assets/lib/screen.lua" type="client" cache="false"/>
+  <script src="assets/lib/draw.lua" type="client" cache="false"/>
+  <script src="assets/lib/ui.lua" type="client" cache="false"/>
+
+  <script src="import.lua" type="shared" cache="false"/>
+
+  <script src="shared.lua" type="shared" cache="false"/>
+
+  <script src="assets/lib/color.lua" type="client" cache="false"/>
+
+
+  <script src="server.lua" type="server"/>
+  <script src="client.lua" type="client" cache="false"/>
+
+  <file src="assets/*.png"/>
+  <file src="assets/*/*.png"/>
+
+  <export function="loadMiniGameFunctions" type="shared"/>
+  <export function="getStateMiniGame" type="client"/>
+  <export function="clearMiniGame" type="client"/>
+  <export function="startMiniGame" type="shared"/>
+  <export function="stopMiniGame" type="shared"/>
+  
+</meta>
