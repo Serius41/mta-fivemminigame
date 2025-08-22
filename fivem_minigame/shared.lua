@@ -1,6 +1,6 @@
 
 if localPlayer then 
-   width,height = respcX(132),respcX(132)
+   width,height = respcX(132),respcY(132)
 
    colors = {
         ui = {

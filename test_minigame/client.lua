@@ -1,3 +1,5 @@
+Code for client use
+```lua
 loadstring(exports.fivem_minigame:loadMiniGameFunctions())()
 
 addCommandHandler("minigameclient", function(player)
