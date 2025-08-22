@@ -87,6 +87,6 @@ end)
 
 ## 📽️ Demo
 
-Video Preview: [Click Here](https://streamable.com/iniy8q)
+Video Preview: https://streamable.com/iniy8q
 
 
