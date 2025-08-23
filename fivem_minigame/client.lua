@@ -1,6 +1,6 @@
 MiniGame = {}
 
-function startMiniGame(event, speed, maxRights, player, key, fromServer)
+function startMiniGame(event, speed, maxRights, player, key, fromServer, extraArgs, targetEvents)
     if not isEventHandlerAdded("onClientRender", root, render) then
         MiniGame.textures = {}
         MiniGame.textures.cricle = dxCreateTexture("assets/img/cricle.png")
@@ -19,6 +19,13 @@ function startMiniGame(event, speed, maxRights, player, key, fromServer)
         MiniGame.waitingForValidation = false
         
         MiniGame.event = event
+        MiniGame.extraArgs = extraArgs or nil
+
+        if targetEvents == "client" or targetEvents == "server" then
+            MiniGame.callbackTarget = targetEvents
+        else
+            MiniGame.callbackTarget = (MiniGame.fromServer and "client") or "server"
+        end
         addEvent(MiniGame.event, true)
 
         MiniGame.player = player or localPlayer
@@ -27,7 +34,7 @@ function startMiniGame(event, speed, maxRights, player, key, fromServer)
         if not fromServer then
             MiniGame.random = math.random(0, 360)
             MiniGame.rotation = getRandomStartPosition(MiniGame.random, 52)
-            local keyGroups = keys or {{"q", "w", "e", "r"}, {"1", "2", "3", "4"}}
+            local keyGroups = keys or {{"1", "2", "3", "4"}, {"1", "2", "3", "4"}}
             local selectedGroup = keyGroups[math.random(1, 2)]
             MiniGame.keyboard = selectedGroup[math.random(#selectedGroup)]
         else
@@ -51,13 +58,15 @@ function handleServerGameData(gameData)
     MiniGame.event = gameData.event
     MiniGame.speed = gameData.speed
     MiniGame.maxRights = gameData.maxRights
+    MiniGame.extraArgs = gameData.extraArgs
 end
 
 function MiniGame.Status(state,msg)
-    if not MiniGame.fromServer then
-        triggerEvent(MiniGame.event, resourceRoot, state, MiniGame.player, msg)
+    local extra = MiniGame.extraArgs or {}
+    if MiniGame.callbackTarget == "client" then
+        triggerEvent(MiniGame.event, resourceRoot, state, MiniGame.player, msg, unpack(extra))
     else
-        triggerServerEvent(MiniGame.event, resourceRoot, state, MiniGame.player, msg)
+        triggerServerEvent(MiniGame.event, resourceRoot, state, MiniGame.player, msg, unpack(extra))
     end
 end
 
@@ -91,7 +100,7 @@ function onKeyPress(key, press)
             else
                 MiniGame.random = math.random(0, 360)
                 MiniGame.rotation = getRandomStartPosition(MiniGame.random, 52)
-                local keyGroups = keys or {{"q", "w", "e", "r"}, {"1", "2", "3", "4"}}
+                local keyGroups = keys or {{"1", "2", "3", "4"}, {"1", "2", "3", "4"}}
                 local selectedGroup = keyGroups[math.random(1, 2)]
                 MiniGame.keyboard = selectedGroup[math.random(#selectedGroup)]
                 MiniGame.hasEnteredArea = false
@@ -115,6 +124,7 @@ addEventHandler("onClientKeyValidated", root, function(success, reason, data)
             MiniGame.random = data.random
             MiniGame.rotation = data.rotation
             MiniGame.correctCount = data.correctCount
+            MiniGame.keyboard = data.keyboard
             MiniGame.hasEnteredArea = false
             MiniGame.previousInArea = nil
         end
@@ -160,9 +170,9 @@ function render()
 
     MiniGame.rotation = (MiniGame.rotation + (MiniGame.speed or 2)) % 360
        
-    dxDrawImage(centerPosition(width), centerPosition(height, true), width, height, MiniGame.textures.cricle, 0,0,0,getColor("ui","cricle",255))
-    dxDrawImage(centerPosition(width), centerPosition(height, true), width, height, MiniGame.textures.area, MiniGame.random, 0,0,getColor("ui","area",255))
-    dxDrawImage(centerPosition(width), centerPosition(height, true), width, height, MiniGame.textures.detectedline, MiniGame.rotation, 0,0,getColor("ui","detectedline",255))
+    dxDrawImage(centerPosition(132), centerPosition(132, true), width, height, MiniGame.textures.cricle, 0,0,0,getColor("ui","cricle",255))
+    dxDrawImage(centerPosition(132), centerPosition(132, true), width, height, MiniGame.textures.area, MiniGame.random, 0,0,getColor("ui","area",255))
+    dxDrawImage(centerPosition(132), centerPosition(132, true), width, height, MiniGame.textures.detectedline, MiniGame.rotation, 0,0,getColor("ui","detectedline",255))
 
     if MiniGame.keyboard then
         centerDrawRoundedText(centerPosition(40), centerPosition(40, true), respcX(40), respcY(40), string.upper(tostring(MiniGame.keyboard)))
@@ -196,7 +206,7 @@ end
 
 addEvent("onClientStartMiniGame", true)
 addEventHandler("onClientStartMiniGame", root, function(gameData)
-    startMiniGame(gameData.event, gameData.speed, gameData.maxRights, localPlayer, nil, true)
+    startMiniGame(gameData.event, gameData.speed, gameData.maxRights, localPlayer, gameData.keyboard, true, gameData.extraArgs, gameData.targetEvents)
     handleServerGameData(gameData)
 end)
 
@@ -205,5 +215,3 @@ addEventHandler("onClientStopMiniGame", root, function()
     MiniGame.Status(false)
     stopMiniGame()
 end)
-
-

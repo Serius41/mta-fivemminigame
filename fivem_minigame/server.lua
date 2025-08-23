@@ -1,7 +1,6 @@
-
 local activeGames = {}
 
-function startMiniGame(player, event, speed, maxRights, keys)
+function startMiniGame(player, event, speed, maxRights, keys, extraArgs, targetEvents)
     if not isElement(player) then return end
     
     local gameId = tostring(player) .. "_" .. getTickCount()
@@ -20,7 +19,7 @@ function startMiniGame(player, event, speed, maxRights, keys)
         gameActive = true
     }
     
-    local onKey = keys or {{"q", "w", "e", "r"}, {"1", "2", "3", "4"}}
+    local onKey = keys  or {{"1", "2", "3", "4"}, {"1", "2", "3", "4"}}
     local selectedKeyGroup = onKey[activeGames[player].randomKey]
     activeGames[player].keyboard = selectedKeyGroup[math.random(#selectedKeyGroup)]
     
@@ -31,7 +30,9 @@ function startMiniGame(player, event, speed, maxRights, keys)
         maxRights = maxRights,
         random = activeGames[player].currentRandom,
         rotation = activeGames[player].currentRotation,
-        keyboard = activeGames[player].keyboard
+        keyboard = activeGames[player].keyboard,
+        extraArgs = extraArgs,
+        targetEvents = targetEvents
     })
 end 
 
@@ -74,7 +75,7 @@ function validateKeyPress(player, key, clientRotation, clientRandom)
         gameState.currentRotation = getRandomStartPosition(gameState.currentRandom, 52)
         gameState.randomKey = math.random(1, 2)
         
-        local onKey = keys or {{"q", "w", "e", "r"}, {"1", "2", "3", "4"}}
+        local onKey = keys or {{"1", "2", "3", "4"}, {"1", "2", "3", "4"}}
         local selectedKeyGroup = onKey[gameState.randomKey]
         gameState.keyboard = selectedKeyGroup[math.random(#selectedKeyGroup)]
         
