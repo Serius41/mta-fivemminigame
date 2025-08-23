@@ -170,9 +170,9 @@ function render()
 
     MiniGame.rotation = (MiniGame.rotation + (MiniGame.speed or 2)) % 360
        
-    dxDrawImage(centerPosition(132), centerPosition(132, true), width, height, MiniGame.textures.cricle, 0,0,0,getColor("ui","cricle",255))
-    dxDrawImage(centerPosition(132), centerPosition(132, true), width, height, MiniGame.textures.area, MiniGame.random, 0,0,getColor("ui","area",255))
-    dxDrawImage(centerPosition(132), centerPosition(132, true), width, height, MiniGame.textures.detectedline, MiniGame.rotation, 0,0,getColor("ui","detectedline",255))
+    dxDrawImage(x, y, width, height, MiniGame.textures.cricle, 0,0,0,getColor("ui","cricle",255))
+    dxDrawImage(x, y, width, height, MiniGame.textures.area, MiniGame.random, 0,0,getColor("ui","area",255))
+    dxDrawImage(x, y, width, height, MiniGame.textures.detectedline, MiniGame.rotation, 0,0,getColor("ui","detectedline",255))
 
     if MiniGame.keyboard then
         centerDrawRoundedText(centerPosition(40), centerPosition(40, true), respcX(40), respcY(40), string.upper(tostring(MiniGame.keyboard)))

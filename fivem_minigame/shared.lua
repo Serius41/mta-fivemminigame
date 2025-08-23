@@ -1,7 +1,9 @@
 
 if localPlayer then 
-   width,height = respcX(132),respcY(132)
-
+   position = 132
+   width,height = respcX(position),respcY(position)
+   x,y = centerPosition(position),centerPosition(position,true)
+   
    colors = {
         ui = {
             cricle = "#2b322b",
